@@ -1,0 +1,640 @@
+/* ==========================================================================
+   1. SYSTEM DESIGN VARIABLES & RESET
+   ========================================================================== */
+:root {
+    --bg-main: #0a0b10;
+    --bg-card: rgba(20, 22, 34, 0.6);
+    --bg-nav: rgba(10, 11, 16, 0.75);
+    --accent-neon: #00ffcc;
+    --accent-purple: #7928ca;
+    --text-primary: #ffffff;
+    --text-secondary: #94a3b8;
+    --font-heading: 'Orbitron', sans-serif;
+    --font-body: 'Plus Jakarta Sans', sans-serif;
+    --border-glass: rgba(255, 255, 255, 0.05);
+    --glow: 0 0 20px rgba(0, 255, 204, 0.2);
+    --transition-smooth: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Background ambient light artifacts */
+body::before {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(121, 40, 202, 0.15) 0%, rgba(0,0,0,0) 70%);
+    top: -200px;
+    left: -200px;
+    z-index: -1;
+}
+
+/* ==========================================================================
+   2. REUSABLE COMPONENTS & UTILITIES
+   ========================================================================== */
+.section-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 100px 24px;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-header h2 {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+}
+
+.section-header p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.text-gradient {
+    background: linear-gradient(135deg, var(--accent-neon) 0%, #38bdf8 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Premium Buttons */
+.btn {
+    display: inline-block;
+    padding: 12px 28px;
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: var(--transition-smooth);
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--accent-neon) 0%, #0284c7 100%);
+    color: #000000;
+    box-shadow: var(--glow);
+    border: none;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(0, 255, 204, 0.4);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--text-primary);
+    border: 1px solid var(--border-glass);
+}
+
+.btn-secondary:hover {
+    background: var(--text-primary);
+    color: #000000;
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--accent-neon);
+    border: 1px solid rgba(0, 255, 204, 0.3);
+}
+
+.btn-outline:hover {
+    background: rgba(0, 255, 204, 0.05);
+    border-color: var(--accent-neon);
+    box-shadow: var(--glow);
+}
+
+/* ==========================================================================
+   3. NAVIGATION BAR
+   ========================================================================== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--bg-nav);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border-glass);
+    z-index: 1000;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--text-primary);
+    text-decoration: none;
+    letter-spacing: 3px;
+}
+
+.logo span {
+    color: var(--accent-neon);
+}
+
+.nav-menu {
+    display: flex;
+    gap: 32px;
+}
+
+.nav-link {
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: var(--transition-smooth);
+}
+
+.nav-link:hover {
+    color: var(--accent-neon);
+}
+
+/* ==========================================================================
+   4. HERO SECTION
+   ========================================================================== */
+.hero-section {
+    padding-top: 160px;
+    padding-bottom: 100px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.hero-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+}
+
+.badge {
+    display: inline-block;
+    padding: 6px 16px;
+    background: rgba(121, 40, 202, 0.15);
+    border: 1px solid rgba(121, 40, 202, 0.3);
+    color: #d8b4fe;
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 50px;
+    margin-bottom: 24px;
+}
+
+.hero-content h1 {
+    font-family: var(--font-heading);
+    font-size: 3.5rem;
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 24px;
+}
+
+.hero-content p {
+    color: var(--text-secondary);
+    font-size: 1.15rem;
+    margin-bottom: 40px;
+    max-width: 520px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 16px;
+}
+
+/* Mockup Windows (The $500 Developer Visual Touch) */
+.hero-visual {
+    display: flex;
+    justify-content: center;
+}
+
+.mockup-window {
+    width: 100%;
+    max-width: 500px;
+    background: rgba(15, 17, 28, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    box-shadow: 0 24px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.1);
+    overflow: hidden;
+}
+
+.mockup-header {
+    background: rgba(255, 255, 255, 0.02);
+    padding: 14px 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.dot.red { background: #ff5f56; }
+.dot.yellow { background: #ffbd2e; }
+.dot.green { background: #27c93f; }
+
+.mockup-title {
+    font-family: monospace;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-left: 12px;
+}
+
+.mockup-body {
+    padding: 24px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.85rem;
+    color: #cbd5e1;
+}
+
+.code-line {
+    margin-bottom: 6px;
+}
+
+.code-keyword { color: #f43f5e; }
+.code-func { color: #38bdf8; }
+.code-comment { color: #64748b; font-style: italic; }
+.code-string { color: var(--accent-neon); }
+
+/* ==========================================================================
+   5. ABOUT / OVERVIEW SECTION
+   ========================================================================== */
+.about-section {
+    background: linear-gradient(180deg, var(--bg-main) 0%, #0e1017 100%);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+}
+
+.about-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-glass);
+    padding: 48px 40px;
+    border-radius: 6px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: var(--transition-smooth);
+}
+
+.about-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(121, 40, 202, 0.3);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+.about-icon {
+    font-size: 2rem;
+    color: var(--accent-purple);
+    margin-bottom: 24px;
+}
+
+.about-card h3 {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+}
+
+.about-card p {
+    color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   6. FEATURES GRID
+   ========================================================================== */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.feature-box {
+    background: rgba(255, 255, 255, 0.01);
+    border: 1px solid var(--border-glass);
+    padding: 40px 32px;
+    border-radius: 4px;
+    transition: var(--transition-smooth);
+}
+
+.feature-box:hover {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: var(--accent-neon);
+    box-shadow: var(--glow);
+}
+
+.feature-header-icon {
+    font-size: 1.5rem;
+    color: var(--accent-neon);
+    margin-bottom: 20px;
+}
+
+.feature-box h3 {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+}
+
+.feature-box p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* ==========================================================================
+   7. BLOG SECTION
+   ========================================================================== */
+.blog-section {
+    background: #0e1017;
+}
+
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+}
+
+.blog-card {
+    background: var(--bg-main);
+    border: 1px solid var(--border-glass);
+    border-radius: 6px;
+    overflow: hidden;
+    transition: var(--transition-smooth);
+    position: relative;
+}
+
+.blog-card:hover {
+    transform: translateY(-8px);
+    border-color: var(--accent-neon);
+}
+
+.blog-badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(0, 255, 204, 0.1);
+    color: var(--accent-neon);
+    padding: 4px 12px;
+    font-family: var(--font-heading);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 255, 204, 0.2);
+}
+
+.blog-content {
+    padding: 60px 32px 40px 32px;
+}
+
+.blog-meta {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.blog-card h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 16px;
+}
+
+.blog-card p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: 24px;
+}
+
+.blog-link {
+    color: var(--accent-neon);
+    text-decoration: none;
+    font-family: var(--font-heading);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition-smooth);
+}
+
+.blog-link i {
+    font-size: 0.75rem;
+    transition: var(--transition-smooth);
+}
+
+.blog-card:hover .blog-link i {
+    transform: translateX(4px);
+}
+
+/* ==========================================================================
+   8. FAQ SECTION
+   ========================================================================== */
+.faq-list {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.faq-item {
+    background: var(--bg-card);
+    border: 1px solid var(--border-glass);
+    padding: 32px;
+    border-radius: 6px;
+}
+
+.faq-question h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+.faq-answer p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* ==========================================================================
+   9. CONTACT FORM & FOOTER
+   ========================================================================== */
+.contact-section {
+    background: linear-gradient(180deg, #0e1017 0%, var(--bg-main) 100%);
+}
+
+.contact-box {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-glass);
+    padding: 64px;
+    border-radius: 8px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.contact-info h2 {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+}
+
+.contact-info p {
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 20px;
+}
+
+.social-icons a {
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    transition: var(--transition-smooth);
+}
+
+.social-icons a:hover {
+    color: var(--accent-neon);
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-glass);
+    padding: 16px;
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    border-radius: 4px;
+    transition: var(--transition-smooth);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent-neon);
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.footer {
+    text-align: center;
+    padding: 40px 24px;
+    border-top: 1px solid var(--border-glass);
+    background: var(--bg-main);
+}
+
+.footer p {
+    color: #475569;
+    font-size: 0.85rem;
+    font-family: var(--font-heading);
+    letter-spacing: 1px;
+}
+
+/* ==========================================================================
+   10. RESPONSIVE DESIGN (MOBILE ADAPTATION)
+   ========================================================================== */
+@media (max-width: 992px) {
+    .hero-container,
+    .about-grid,
+    .contact-box {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .features-grid,
+    .blog-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .hero-content {
+        text-align: center;
+    }
+    .hero-content p {
+        margin: 0 auto 40px auto;
+    }
+    .hero-buttons {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none; /* Simplification for testing layout */
+    }
+    .features-grid,
+    .blog-grid {
+        grid-template-columns: 1fr;
+    }
+    .hero-content h1 {
+        font-size: 2.5rem;
+    }
+    .section-header h2 {
+        font-size: 2rem;
+    }
+    .contact-box {
+        padding: 32px;
+    }
+}
