@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI-Minds | The Future of Learning</title>
+    <!-- Google Fonts for Premium Typography -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Premium Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <!-- 1. NAVIGATION BAR -->
     <header class="navbar">
         <div class="nav-container">
             <a href="#" class="logo">AI<span>MINDS</span></a>
@@ -28,6 +31,7 @@
         </div>
     </header>
 
+    <!-- 2. HERO SECTION -->
     <section id="home" class="hero-section">
         <div class="hero-container">
             <div class="hero-content">
@@ -64,6 +68,7 @@
         </div>
     </section>
 
+    <!-- 3. ABOUT / OVERVIEW SECTION -->
     <section id="about" class="about-section">
         <div class="section-container">
             <div class="section-header">
@@ -85,6 +90,7 @@
         </div>
     </section>
 
+    <!-- 4. FEATURES GRID -->
     <section id="features" class="features-section">
         <div class="section-container">
             <div class="section-header">
@@ -111,6 +117,7 @@
         </div>
     </section>
 
+    <!-- 5. BLOG SECTION -->
     <section id="blog" class="blog-section">
         <div class="section-container">
             <div class="section-header">
@@ -118,6 +125,7 @@
                 <p>Comprehensive strategies on turning language tools into an elite personal infrastructure.</p>
             </div>
             <div class="blog-grid">
+                <!-- Blog Post 1 -->
                 <article class="blog-card">
                     <div class="blog-badge">Prompting</div>
                     <div class="blog-content">
@@ -127,6 +135,7 @@
                         <a href="blog.html#prompting-blueprint" class="blog-link">Read Blueprint <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
                 </article>
+                <!-- Blog Post 2 -->
                 <article class="blog-card">
                     <div class="blog-badge">Academic Tech</div>
                     <div class="blog-content">
@@ -136,6 +145,7 @@
                         <a href="blog.html#academic-tech" class="blog-link">Read Blueprint <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
                 </article>
+                <!-- Blog Post 3 -->
                 <article class="blog-card">
                     <div class="blog-badge">Workflow</div>
                     <div class="blog-content">
@@ -149,6 +159,7 @@
         </div>
     </section>
 
+    <!-- 6. FAQ SECTION -->
     <section id="faq" class="faq-section">
         <div class="section-container">
             <div class="section-header">
@@ -159,6 +170,7 @@
                 <div class="faq-item">
                     <div class="faq-question">
                         <h3>Will relying on AI degrade my personal critical thinking skills?</h3>
+                        <i class="fa-solid fa-chevron-down faq-toggle"></i>
                     </div>
                     <div class="faq-answer">
                         <p>Only if you let it generate your conclusions. When used correctly as an structural architecture tool or analytical sparring partner, it forces you to form deeper questions and think more critically about your edits.</p>
@@ -167,6 +179,7 @@
                 <div class="faq-item">
                     <div class="faq-question">
                         <h3>What is the absolute best way to eliminate generic output language?</h3>
+                        <i class="fa-solid fa-chevron-down faq-toggle"></i>
                     </div>
                     <div class="faq-answer">
                         <p>Strictly forbid the model from using weak filler vocabulary, clichés, or introductory summaries. Force it to adopt a specific professional profile with explicit structural rules before it outputs any text.</p>
@@ -176,6 +189,7 @@
         </div>
     </section>
 
+    <!-- 7. CONTACT FORM & FOOTER -->
     <section id="contact" class="contact-section">
         <div class="section-container">
             <div class="contact-box">
@@ -188,7 +202,7 @@
                         <a href="#"><i class="fa-brands fa-twitter"></i></a>
                     </div>
                 </div>
-                <form class="contact-form" onsubmit="event.preventDefault();">
+                <form class="contact-form" onsubmit="event.preventDefault(); alert('Transmission Successful.');">
                     <div class="form-group">
                         <input type="text" placeholder="Identity / Name" required>
                     </div>
@@ -207,6 +221,34 @@
     <footer class="footer">
         <p>&copy; 2026 AI-MINDS Portal. Engineered for elite performance standards.</p>
     </footer>
+
+    <!-- INTERACTIVE ENGINE LOGIC -->
+    <script>
+        // Smooth Navbar Scroll Interaction
+        window.addEventListener('scroll', () => {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // FAQ Smooth Accordion Mechanics
+        document.querySelectorAll('.faq-item').forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                const isOpen = item.classList.contains('active');
+                
+                // Close all open items first for a premium single-toggle feel
+                document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('active'));
+                
+                if (!isOpen) {
+                    item.classList.add('active');
+                }
+            });
+        });
+    </script>
 
 </body>
 </html>
