@@ -4,7 +4,7 @@
 :root {
     --bg-main: #0a0b10;
     --bg-card: rgba(20, 22, 34, 0.6);
-    --bg-nav: rgba(10, 11, 16, 0.75);
+    --bg-nav: rgba(10, 11, 16, 0.85);
     --accent-neon: #00ffcc;
     --accent-purple: #7928ca;
     --text-primary: #ffffff;
@@ -138,11 +138,18 @@ body::before {
     top: 0;
     left: 0;
     width: 100%;
+    background-color: transparent;
+    border-bottom: 1px solid transparent;
+    z-index: 1000;
+    transition: var(--transition-smooth);
+}
+
+.navbar.scrolled {
     background-color: var(--bg-nav);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border-glass);
-    z-index: 1000;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .nav-container {
@@ -242,7 +249,7 @@ body::before {
     gap: 16px;
 }
 
-/* Mockup Windows (The $500 Developer Visual Touch) */
+/* Mockup Windows */
 .hero-visual {
     display: flex;
     justify-content: center;
@@ -303,7 +310,7 @@ body::before {
 
 /* ==========================================================================
    5. ABOUT / OVERVIEW SECTION
-   ========================================================================== */
+   ========================================================================= */
 .about-section {
     background: linear-gradient(180deg, var(--bg-main) 0%, #0e1017 100%);
 }
@@ -480,7 +487,7 @@ body::before {
 }
 
 /* ==========================================================================
-   8. FAQ SECTION
+   8. FAQ SECTION (WITH ACCORDION MECHANICS)
    ========================================================================== */
 .faq-list {
     max-width: 800px;
@@ -493,19 +500,54 @@ body::before {
 .faq-item {
     background: var(--bg-card);
     border: 1px solid var(--border-glass);
-    padding: 32px;
+    padding: 24px 32px;
     border-radius: 6px;
+    cursor: pointer;
+    transition: var(--transition-smooth);
+}
+
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .faq-question h3 {
     font-size: 1.1rem;
     font-weight: 600;
-    margin-bottom: 12px;
+    margin-bottom: 0;
+}
+
+.faq-toggle {
+    color: var(--text-secondary);
+    transition: var(--transition-smooth);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .faq-answer p {
     color: var(--text-secondary);
     font-size: 0.95rem;
+    padding-top: 16px;
+}
+
+/* Interactive States toggled via JS */
+.faq-item.active {
+    border-color: rgba(0, 255, 204, 0.3);
+    background: rgba(20, 22, 34, 0.8);
+}
+
+.faq-item.active .faq-toggle {
+    transform: rotate(180deg);
+    color: var(--accent-neon);
+}
+
+.faq-item.active .faq-answer {
+    max-height: 200px;
 }
 
 /* ==========================================================================
@@ -622,7 +664,7 @@ body::before {
 
 @media (max-width: 768px) {
     .nav-menu {
-        display: none; /* Simplification for testing layout */
+        display: none;
     }
     .features-grid,
     .blog-grid {
